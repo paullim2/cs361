@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Paul Lim</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+
+    <style>
+      body {font-size: 18px}
+      .small-font {font-size: 14px}
+      .large-font {font-size: 22px}
+      .hidden {display: none}
+    </style>
+</head>
+
+<body>
+
+    <p>
+      This app can help plan your next trip! It provides details of your destination zipcode like population, distance, and temperature.
+      If you're curious about the data, the following APIs were used to populate the data: ZipCode API (population), Google Maps Distance Matrix
+      (distance), and OpenWeatherMap API (weather).
+    </p>
+
+    <a href="#" id="toggleLink">Show Instructions</a>
+    <div id="hiddenBlock" class="hidden">
+        <p>Simply submit your current and destination zip codes in the Enter Zip Codes box and the details will present themselves in the 
+          Destination Details box. Accessibility options can be chosen in the bottom. Distance is shown in Miles by default and Temperature 
+          is shown in Fahrenheit by default. But you can choose the appropriate radio buttons to switch to Kilometer or Celcius.
+        </p>
+    </div>
+
+    <p></p>
+    <p></p>
+
+    <form id="zipCodeForm">
+      <fieldset>
+          <legend>Enter Zip Codes</legend>
+          <p>
+              <label for="curZipCode">Your Current Zipcode:</label>
+              <input 
+                  type="text" name="name" id="curZipCode" required autofocus />
+          </p>
+
+          <p>
+            <label for="destZipCode">Destination Zipcode:</label>
+            <input 
+                type="text" name="name" id="destZipCode" required />
+          </p>
+        
+          <p>Click submit to see the population, distance, and temperature of the destination zip code.</p>
+          <button type="button" onclick="confirmSubmit()"> Submit </button>
+      </fieldset>
+    </form>
+
+    <fieldset>
+        <legend>Increase/Decrease Text</legend>
+        <button onclick="decreaseText()">Decrease text</button>
+        <button onclick="increaseText()">Increase text</button>
+    </fieldset>
+
+    <script>
+      document.getElementById("toggleLink").addEventListener("click", function(event) {
+          event.preventDefault(); // Prevent default link behavior
+          var hiddenBlock = document.getElementById("hiddenBlock");
+          if (hiddenBlock.classList.contains("hidden")) {
+              hiddenBlock.classList.remove("hidden");
+              document.getElementById("toggleLink").textContent = "Hide instructions";
+          } else {
+              hiddenBlock.classList.add("hidden");
+              document.getElementById("toggleLink").textContent = "Show instructions";
+          }
+        });
+     </script>
+
+    <script>
+      function confirmSubmit() {
+          var curZipCode = document.getElementById("curZipCode").value;
+          var destZipCode = document.getElementById("destZipCode").value;
+      
+          var confirmation = confirm("Are you sure you want to submit these zip codes?\nCurrent Zip Code: " + curZipCode + "\nDestination Zip Code: " + destZipCode);
+          
+          if (confirmation) {
+              // If user clicks "OK" in the confirmation dialog
+              document.getElementById("zipCodeForm").submit();
+          } else {
+              // If user clicks "Cancel" in the confirmation dialog
+              return false;
+          }
+      }
+    </script>
+
+    <script>
+      /* Default text preset to regular */
+      let currentSize = "regular";
+    
+      /* decrease font function. drops to next sequential size. does not change once at small. */
+      function decreaseText() {
+        if (currentSize === "large") 
+          {document.body.classList.remove("large-font"); currentSize = "regular"} 
+        else if (currentSize === "regular") 
+          {document.body.classList.add("small-font"); currentSize = "small"}}
+    
+      /* increase font function. moves up to next sequential size. does not change once at large. */
+      function increaseText() {
+        if (currentSize === "small") 
+          {document.body.classList.remove("small-font"); currentSize = "regular"} 
+        else if (currentSize === 'regular') 
+          {document.body.classList.add("large-font"); currentSize = "large"}}
+    </script>
+
+</body>
+</html>
